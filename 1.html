@@ -15,14 +15,13 @@
     
     <p>点击下面的按钮发送预设短信：</p>
     <button id="sendSmsBtn">发送短信</button>
-
     <div id="qrcode"></div>
 
     <script>
-        var phoneNumber = "106988881700511";
-        var messageBody = "1";
+        var phoneNumber = "+1234567890";
+        var messageBody = "你好，这是一条预设的短信内容。";
         var encodedBody = encodeURIComponent(messageBody);
-        var smsLink = `sms:${phoneNumber}?body=${encodedBody}`;
+        var smsLink = `sms:${phoneNumber}${getQuerySeparator()}body=${encodedBody}`;
 
         document.getElementById('sendSmsBtn').addEventListener('click', function() {
             window.location.href = smsLink;
@@ -41,6 +40,11 @@
         // 检查是否是移动设备
         function isMobile() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 根据设备类型返回适当的查询分隔符
+        function getQuerySeparator() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?';
         }
 
         // 如果是移动设备，显示发送短信按钮
